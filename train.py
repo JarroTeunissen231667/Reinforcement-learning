@@ -52,3 +52,4 @@ for i in range(10):
     model.learn(total_timesteps=time_steps, callback=wandb_callback, progress_bar=True, reset_num_timesteps=False,tb_log_name=f"runs/{run.id}")
     model.save(f"models/{run.id}/{time_steps*(i+1)}")
     
+# python train.py --learning_rate 0.0001 --batch_size 64 --n_steps 2048 --n_epochs 10
