@@ -59,24 +59,15 @@ wandb_callback = WandbCallback(
 )
 
 # Total training timesteps per iteration
-time_steps = 250000
+time_steps = 2500000
 
 # Training loop
-for i in range(10):
-    print(f"Starting learn iteration {i + 1}")
-    
-    # Train the model and log data
-    model.learn(
-        total_timesteps=time_steps,
-        callback=wandb_callback,
-        progress_bar=True,
-        reset_num_timesteps=False,
-        tb_log_name=f"runs/{run.id}"
-    )
-    print(f"Completed learn iteration {i + 1}")
-    
-    # Save the model after each iteration
-    model.save(f"{model_dir}/{time_steps * (i + 1)}")
-    print(f"Model saved at iteration {i + 1}: {model_dir}/{time_steps * (i + 1)}")
-    
+model.learn(
+    total_timesteps=time_steps,
+    callback=wandb_callback,
+    progress_bar=True,
+    reset_num_timesteps=False,
+    tb_log_name=f"runs/{run.id}"
+)
+
 # python train.py --learning_rate 0.0001 --batch_size 128 --n_steps 2048 --n_epochs 10
