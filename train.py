@@ -59,7 +59,7 @@ wandb_callback = WandbCallback(
 )
 
 # Total training timesteps per iteration
-time_steps = 100000
+time_steps = 2500000
 
 # Training loop
 for i in range(10):
