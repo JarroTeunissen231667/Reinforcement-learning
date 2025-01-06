@@ -53,13 +53,13 @@ os.makedirs(model_dir, exist_ok=True)
 
 # Create wandb callback
 wandb_callback = WandbCallback(
-    model_save_freq=1000, 
+    model_save_freq=100000, 
     model_save_path=model_dir, 
     verbose=2
 )
 
 # Total training timesteps per iteration
-time_steps = 2500000
+time_steps = 250000
 
 # Training loop
 for i in range(10):
