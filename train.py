@@ -79,4 +79,4 @@ for i in range(10):
     model.save(f"{model_dir}/{time_steps * (i + 1)}")
     print(f"Model saved at iteration {i + 1}: {model_dir}/{time_steps * (i + 1)}")
     
-# python train.py --learning_rate 0.0001 --batch_size 64 --n_steps 2048 --n_epochs 10
+# python train.py --learning_rate 0.0001 --batch_size 128 --n_steps 2048 --n_epochs 10
