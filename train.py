@@ -1,6 +1,13 @@
+# ----------------------------------------------------------
+## Task 11 - Train a PPO model Jarro Teunissen
+# ----------------------------------------------------------
+
+# Import the necessary libraries
 from wandb.integration.sb3 import WandbCallback
 from stable_baselines3 import PPO
+from stable_baselines3.common.callbacks import EvalCallback, CallbackList
 from stable_baselines3.common.env_checker import check_env
+from ot2_env_wrapper import OT2Env
 import gymnasium as gym
 import argparse
 from clearml import Task
@@ -25,49 +32,57 @@ task = Task.init(
 task.set_base_docker("deanis/2023y2b-rl:latest")
 task.execute_remotely(queue_name="default")
 
-env = OT2Env()  
+#Define the model
+env = OT2Env()
 
-# Argument parser setup
+# Initialate wandb
+run = wandb.init(project="task11",sync_tensorboard=True)
+save_path = f"models/{run.id}"
+os.makedirs(save_path, exist_ok=True)
+
+# Set the amount of steps for the training
+timesteps = 5000000
+
+# Define the arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--learning_rate", type=float, default=0.0003, help="Learning rate for the PPO model")
-parser.add_argument("--batch_size", type=int, default=64, help="Batch size for the PPO model")
-parser.add_argument("--n_steps", type=int, default=2048, help="Number of steps per PPO update")
-parser.add_argument("--n_epochs", type=int, default=10, help="Number of epochs for PPO optimization")
-args, unknown = parser.parse_known_args()  # Handles Jupyter environments gracefully
+# Set the default parameters.
+parser.add_argument("--learning_rate", type=float, default=0.0001)
+parser.add_argument("--batch_size", type=int, default=32)
+parser.add_argument("--n_steps", type=int, default=2048)
+parser.add_argument("--n_epochs", type=int, default=10)
 
-# Initialize the PPO model
-model = PPO(
-    "MlpPolicy",
-    env,
-    verbose=1,
-    learning_rate=args.learning_rate,
-    batch_size=args.batch_size,
-    n_steps=args.n_steps,
-    n_epochs=args.n_epochs,
-    tensorboard_log=f"runs/{run.id}",
-)
 
-# Create path to save models
-model_dir = f"models/{run.id}"
-os.makedirs(model_dir, exist_ok=True)
 
-# Create wandb callback
+# Extra parameters chosen because of the training
+parser.add_argument("--gamma", type=float, default=0.98)
+parser.add_argument("--policy", type=str, default="MlpPolicy")
+parser.add_argument("--clip_range", type=float, default=0.15)
+parser.add_argument("--value_coefficient", type=float, default=0.5)
+args = parser.parse_args()
+
+# Create the PPO Model
+model = PPO(args.policy, env, verbose=1,
+            learning_rate=args.learning_rate, 
+            batch_size=args.batch_size, 
+            n_steps=args.n_steps, 
+            n_epochs=args.n_epochs,
+            gamma=args.gamma,
+            clip_range=args.clip_range,
+            vf_coef=args.value_coefficient,
+            tensorboard_log=f"runs/{run.id}")
+
+# Callback for wandb
 wandb_callback = WandbCallback(
-    model_save_freq=100000, 
-    model_save_path=model_dir, 
-    verbose=2
-)
+    model_save_freq=100000,
+    model_save_path=f"models/{run.id}",
+    verbose=2,)
 
-# Total training timesteps per iteration
-time_steps = 2500000
+# Train the model
+model.learn(total_timesteps=timesteps, callback=wandb_callback, progress_bar=True, reset_num_timesteps=False,tb_log_name=f"runs/{run.id}")
+# Save the model.
+model.save(f"models/{run.id}/{timesteps}_baseline")
+# Save the model to wandb
+wandb.save(f"models/{run.id}/{timesteps}_baseline")
 
-# Training loop
-model.learn(
-    total_timesteps=time_steps,
-    callback=wandb_callback,
-    progress_bar=True,
-    reset_num_timesteps=False,
-    tb_log_name=f"runs/{run.id}"
-)
 
-# python train.py --learning_rate 0.0001 --batch_size 128 --n_steps 2048 --n_epochs 10
+# python train.py --learning_rate 0.0001 --batch_size 32 --n_steps 2048 --n_epochs 10 --gamma 0.98 --policy MlpPolicy --clip_range 0.15 --value_coefficient 0.5
