@@ -16,7 +16,7 @@ import tensorflow
 import os
 
 # After running the setup script we can upload this
-from ot2_env_wrapper_rework_2 import OT2Env
+from ot2_env_wrapper_rework import OT2CustomEnv
 # Load the API key for wandb
 os.environ['WANDB_API_KEY'] = 'c9df9474ff41da6be45ba2e10ff13f6749aec8dd'
 run = wandb.init(project="2024-Y2B-RoboSuite", sync_tensorboard=True)
@@ -32,7 +32,7 @@ task.set_base_docker("deanis/2023y2b-rl:latest")
 task.execute_remotely(queue_name="default")
 
 #Define the model
-env = OT2Env()
+env = OT2CustomEnv()
 
 # Initialate wandb
 run = wandb.init(project="task11",sync_tensorboard=True)
