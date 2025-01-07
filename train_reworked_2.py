@@ -60,7 +60,7 @@ parser.add_argument("--n_epochs", type=int, default=10)
 args = parser.parse_args()
 
 # Create the PPO Model
-model = PPO(args.policy, env, verbose=1,
+model = PPO('MlpPolicy', env, verbose=1,
             learning_rate=args.learning_rate, 
             batch_size=args.batch_size, 
             n_steps=args.n_steps, 
