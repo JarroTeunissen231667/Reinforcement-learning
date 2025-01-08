@@ -30,7 +30,7 @@ task = Task.init(
 
 # Set base docker image and queue
 task.set_base_docker("deanis/2023y2b-rl:latest")
-task.execute_remotely(queue_name="default")
+task.execute_remotely(queue_name="server2")
 
 #Define the model
 env = OT2Env()
