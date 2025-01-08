@@ -74,7 +74,7 @@ class OT2Env(gym.Env):
         # To do this we need to calculate the distance between the pipette position and the goal position and if it is below a certain threshold, we will consider the task complete. 
         # What is a reasonable threshold? Think about the size of the pipette tip and the size of the plants.
         distance = np.linalg.norm(pipette_position - self.goal_position)
-        if distance < 0.05:
+        if distance < 0.001:
             terminated = True
             # we can also give the agent a positive reward for completing the task
             reward = float(100)

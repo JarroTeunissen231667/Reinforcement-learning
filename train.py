@@ -1,7 +1,9 @@
 # ----------------------------------------------------------
 ## Task 11 - Train a PPO model Jarro Teunissen
 # ----------------------------------------------------------
+import os
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 # Import the necessary libraries
 from wandb.integration.sb3 import WandbCallback
 from stable_baselines3 import PPO
@@ -13,10 +15,9 @@ from clearml import Task
 import wandb
 import typing_extensions as TypeIs
 import tensorflow
-import os
 
 # After running the setup script we can upload this
-from ot2_env_wrapper_rework_2 import OT2Env
+from ot2_env_wrapper import OT2Env
 # Load the API key for wandb
 os.environ['WANDB_API_KEY'] = 'c9df9474ff41da6be45ba2e10ff13f6749aec8dd'
 run = wandb.init(project="2024-Y2B-RoboSuite", sync_tensorboard=True)
