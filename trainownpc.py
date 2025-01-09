@@ -16,7 +16,7 @@ import typing_extensions as TypeIs
 import tensorflow
 
 # After running the setup script we can upload this
-from ot2_env_wrapper_rework3 import OT2Env
+from ot2_env_wrapper_rework_2 import OT2Env
 # Load the API key for wandb
 os.environ['WANDB_API_KEY'] = 'c9df9474ff41da6be45ba2e10ff13f6749aec8dd'
 run = wandb.init(project="2024-Y2B-RoboSuite", sync_tensorboard=True)
