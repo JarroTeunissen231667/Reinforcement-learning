@@ -72,4 +72,4 @@ model.learn(total_timesteps=timesteps, callback=wandb_callback, progress_bar=Tru
 wandb.save(f"models/{run.id}/{timesteps}_baseline")
 
 # python train.py --learning_rate 0.0001 --batch_size 32 --n_steps 2048 --n_epochs 10 --gamma 0.98 --policy MlpPolicy --clip_range 0.15 --value_coefficient 0.5
-#python trainownpc.py --learning_rate 0.0003 --batch_size 64 --n_steps 2048 --n_epochs 10 --gamma 0.99 --policy MlpPolicy --clip_range 0.2 --value_coefficient 0.5
+#python trainownpc.py --learning_rate 0.0003 --batch_size 128 --n_steps 1024 --n_epochs 15 --gamma 0.98 --policy MlpPolicy --clip_range 0.2 --value_coefficient 0.5
