@@ -13,7 +13,7 @@ class OT2Env(gym.Env):
         # Create the simulation environment
         self.sim = Simulation(num_agents=1, render=self.render)
 
-        # Set the maximum values according to the working environment.
+        # Max ranges for the goal position
         self.x_min, self.x_max = -0.187, 0.2531
         self.y_min, self.y_max = -0.1705, 0.2195
         self.z_min, self.z_max = 0.1195, 0.2895
@@ -64,7 +64,7 @@ class OT2Env(gym.Env):
         pipette_position = self.sim.get_pipette_position(self.sim.robotIds[0])
         # Process observation
         observation = np.array(pipette_position, dtype=np.float32)
-        # Calculate the agent's reward
+        # Calculate the agent's reward. Standard reward function
         distance = np.linalg.norm(np.array(pipette_position) - np.array(self.goal_position))
         reward = -distance
         
