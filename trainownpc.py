@@ -60,14 +60,14 @@ model = PPO(args.policy, env, verbose=1,
 
 # Callback for wandb
 wandb_callback = WandbCallback(
-    model_save_freq=100000,
+    model_save_freq=1000000,
     model_save_path=f"modelspc/{run.id}",
     verbose=2,)
 
 # Train the model
 model.learn(total_timesteps=timesteps, callback=wandb_callback, progress_bar=True, reset_num_timesteps=False,tb_log_name=f"runs/{run.id}")
 # Save the model.
-model.save(f"models/{run.id}/{timesteps}_baseline")
+#model.save(f"models/{run.id}/{timesteps}_baseline")
 # Save the model to wandb
 wandb.save(f"models/{run.id}/{timesteps}_baseline")
 
