@@ -7,3 +7,11 @@
 {"time":"2025-01-10T16:52:49.5802863+01:00","level":"INFO","msg":"sender: started","stream_id":"g3nz66us"}
 {"time":"2025-01-10T16:52:50.0411207+01:00","level":"INFO","msg":"Starting system monitor"}
 {"time":"2025-01-10T16:53:01.5976666+01:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-01-10T19:29:19.5862659+01:00","level":"INFO","msg":"stream: closing","id":"g3nz66us"}
+{"time":"2025-01-10T19:29:19.5862659+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-01-10T19:29:19.594388+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-01-10T19:29:22.0320762+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-01-10T19:29:22.2230611+01:00","level":"INFO","msg":"handler: closed","stream_id":"g3nz66us"}
+{"time":"2025-01-10T19:29:22.2230611+01:00","level":"INFO","msg":"sender: closed","stream_id":"g3nz66us"}
+{"time":"2025-01-10T19:29:22.2230611+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"g3nz66us"}
+{"time":"2025-01-10T19:29:22.2230611+01:00","level":"INFO","msg":"stream: closed","id":"g3nz66us"}
