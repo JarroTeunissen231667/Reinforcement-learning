@@ -66,11 +66,18 @@ class OT2Env(gym.Env):
         observation = np.array(pipette_position, dtype=np.float32)
         # Calculate the agent's reward. Standard reward function
         distance = np.linalg.norm(np.array(pipette_position) - np.array(self.goal_position))
-        reward = -distance
+        reward = -distance - 0.001 * self.steps
         
         # Check if the agent reaches within the threshold of the goal position
-        if np.linalg.norm(pipette_position - self.goal_position) <= 0.001:
+        distance = np.linalg.norm(pipette_position - self.goal_position)
+        if distance <= 0.001:
             terminated = True
+            # Reward when reaching the goal
+            reward += 100
+        elif distance <= 0.01:
+            # Small reward when within 10mm of the goal
+            reward += 10
+            terminated = False
         else:
             terminated = False
 
