@@ -5,7 +5,7 @@ from sim_class import Simulation
 
 # Create the class
 class OT2Env(gym.Env):
-    def __init__(self, render=False, max_steps=5000000):
+    def __init__(self, render=False, max_steps=1000):
         super(OT2Env, self).__init__()
         self.render = render
         self.max_steps = max_steps
@@ -13,7 +13,7 @@ class OT2Env(gym.Env):
         # Create the simulation environment
         self.sim = Simulation(num_agents=1, render=self.render)
 
-        # Max ranges for the goal position
+        # Set the maximum values according to the working environment.
         self.x_min, self.x_max = -0.187, 0.2531
         self.y_min, self.y_max = -0.1705, 0.2195
         self.z_min, self.z_max = 0.1195, 0.2895
@@ -64,22 +64,27 @@ class OT2Env(gym.Env):
         pipette_position = self.sim.get_pipette_position(self.sim.robotIds[0])
         # Process observation
         observation = np.array(pipette_position, dtype=np.float32)
-        # Calculate the agent's reward. Standard reward function
+        # Calculate the agent's reward
         distance = np.linalg.norm(np.array(pipette_position) - np.array(self.goal_position))
-        reward = -distance - 0.001 * self.steps
+        reward = -distance
+        
+        # Add negative reward for taking steps
+        reward -= 0.01  # Adjust the step penalty as needed
         
         # Check if the agent reaches within the threshold of the goal position
-        distance = np.linalg.norm(pipette_position - self.goal_position)
-        if distance <= 0.001:
+        if np.linalg.norm(pipette_position - self.goal_position) <= 0.001:
             terminated = True
-            # Reward when reaching the goal
-            reward += 100
-        elif distance <= 0.01:
-            # Small reward when within 10mm of the goal
-            reward += 10
-            terminated = False
+            reward += 10 - (self.steps / self.max_steps) * 10  # Reward decreases based on the number of steps taken
         else:
             terminated = False
+
+        # Checkpoint rewards
+        checkpoint_distances = [0.05, 0.01, 0.005]
+        checkpoint_rewards = [1, 2, 3]
+        for dist, chk_reward in zip(checkpoint_distances, checkpoint_rewards):
+            if distance <= dist:
+                reward += chk_reward
+                break
 
         # Check if episode should be truncated
         if self.steps >= self.max_steps:
@@ -93,9 +98,15 @@ class OT2Env(gym.Env):
         self.steps += 1
 
         return observation, reward, terminated, truncated, info
-
+    def get_plate_image(self):
+        return self.sim.get_plate_image()
     def render(self, mode='human'):
         pass
     
     def close(self):
         self.sim.close()
+        
+    
+        
+        
+    
