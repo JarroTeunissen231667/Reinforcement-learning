@@ -7,3 +7,4 @@
 {"time":"2025-01-13T09:16:50.8414874+01:00","level":"INFO","msg":"sender: started","stream_id":"aov0agdc"}
 {"time":"2025-01-13T09:16:51.2462477+01:00","level":"INFO","msg":"Starting system monitor"}
 {"time":"2025-01-13T09:17:06.0342323+01:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-01-13T09:31:27.5768014+01:00","level":"ERROR","msg":"runconsolelogs: failed to write to file: truncate C:\\Users\\jarro\\Documents\\GitHub\\Reinforcement learning\\wandb\\run-20250113_091649-aov0agdc\\files\\output.log: The requested operation cannot be performed on a file with a user-mapped section open."}
