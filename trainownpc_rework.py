@@ -92,3 +92,6 @@ model.learn(
 
 # Save the model to W&B
 wandb.save(f"models/{run.id}/{timesteps}_baseline")
+
+
+#python trainownpc_rework.py --learning_rate 0.0003 --batch_size 64 --n_steps 2048 --n_epochs 10 --gamma 0.99 --policy MlpPolicy --clip_range 0.2 --value_coefficient 0.5
