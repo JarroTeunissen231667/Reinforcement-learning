@@ -80,7 +80,7 @@ class OT2Env(gym.Env):
 
         # Checkpoint rewards
         checkpoint_distances = [0.05, 0.01, 0.005]
-        checkpoint_rewards = [1, 2, 3]
+        checkpoint_rewards = [0,5, 1, 2]
         for dist, chk_reward in zip(checkpoint_distances, checkpoint_rewards):
             if distance <= dist:
                 reward += chk_reward
