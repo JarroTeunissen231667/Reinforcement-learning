@@ -74,17 +74,23 @@ class OT2Env(gym.Env):
         # Check if the agent reaches within the threshold of the goal position
         if np.linalg.norm(pipette_position - self.goal_position) <= 0.001:
             terminated = True
-            reward += 10 - (self.steps / self.max_steps) * 10  # Reward decreases based on the number of steps taken
+            reward += 50 #- (self.steps / self.max_steps) * 10  # Reward decreases based on the number of steps taken
         else:
             terminated = False
 
+
+        # # Add a small extra negative reward for each step taken in the wrong direction
+        # previous_distance = np.linalg.norm(np.array(self.sim.get_previous_pipette_position(self.sim.robotIds[0])) - np.array(self.goal_position))
+        # if distance > previous_distance:
+        #     reward -= 0.1  # Small penalty for moving away from the goal
+            
         # Checkpoint rewards
-        checkpoint_distances = [0.05, 0.01, 0.005]
-        checkpoint_rewards = [0,5, 1, 2]
-        for dist, chk_reward in zip(checkpoint_distances, checkpoint_rewards):
-            if distance <= dist:
-                reward += chk_reward
-                break
+        # checkpoint_distances = [0.05, 0.01, 0.005]
+        # checkpoint_rewards = [0,5, 1, 2]
+        # for dist, chk_reward in zip(checkpoint_distances, checkpoint_rewards):
+        #     if distance <= dist:
+        #         reward += chk_reward
+        #         break
 
         # Check if episode should be truncated
         if self.steps >= self.max_steps:

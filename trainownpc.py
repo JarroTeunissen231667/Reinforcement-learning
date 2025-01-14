@@ -17,7 +17,7 @@ import typing_extensions as TypeIs
 import tensorflow
 
 # After running the setup script we can upload this
-from ot2_env_wrapper_rework3 import OT2Env
+from ot2_env_wrapper_rework6 import OT2Env
 # Load the API key for wandb
 os.environ['WANDB_API_KEY'] = 'c9df9474ff41da6be45ba2e10ff13f6749aec8dd'
 run = wandb.init(project="2024-Y2B-RoboSuite", sync_tensorboard=True)
@@ -98,3 +98,4 @@ wandb.save(f"models/{run.id}/{timesteps}_baseline")
 #BESTE# python trainownpc.py --learning_rate 0.0003 --batch_size 64 --n_steps 2048 --n_epochs 10 --gamma 0.99 --policy MlpPolicy --clip_range 0.2 --value_coefficient 0.5
 #python trainownpc.py --learning_rate 0.0003 --batch_size 128 --n_steps 1024 --n_epochs 15 --gamma 0.98 --policy MlpPolicy --clip_range 0.2 --value_coefficient 0.5
 # python trainownpc.py --learning_rate 0.0003 --batch_size 128 --n_steps 1024 --n_epochs 15 --gamma 0.98 --policy MlpPolicy --clip_range 0.2 --value_coefficient 0.5 --policy_kwargs "{\"net_arch\":[256,256]}"
+#python trainownpc.py --learning_rate 0.0001 --batch_size 32 --n_steps 2048 --n_epochs 10 --gamma 0.98 --policy MlpPolicy --clip_range 0.15 --value_coefficient 0.5
