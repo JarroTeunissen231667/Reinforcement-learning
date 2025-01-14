@@ -31,7 +31,7 @@ save_path = f"models/{run.id}"
 os.makedirs(save_path, exist_ok=True)
 
 # Set the amount of steps for the training
-timesteps = 5000000
+timesteps = 2918400
 
 import argparse
 import json
