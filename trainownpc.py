@@ -74,7 +74,8 @@ model = PPO(
     clip_range=args.clip_range,
     vf_coef=args.value_coefficient,
     policy_kwargs=policy_kwargs_dict,  
-    tensorboard_log=f"runs/{run.id}"
+    tensorboard_log=f"runs/{run.id}",
+    seed = 0
 )
 
 # Callback for wandb
